@@ -4,6 +4,8 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <string.h>
+#include <math.h>
+#include <arpa/inet.h>
 #include "cJSON.h"
 
  
@@ -63,7 +65,7 @@ int main(){
     }
 
 // reset the server_addr struct
-    memset(&server_addr, 0, sizeOf(server_addr));
+    memset(&server_addr, 0, sizeof(server_addr));
 
 // define the struct 
     server_addr.sin_family = AF_INET;   // ipv4 family addresses
@@ -85,7 +87,9 @@ int main(){
         float new_lon ;
         generate_position(starting_LAT,starting_LON, &new_lat, &new_lon);
 
-        send_coordinates(sockFD,new_lat,new_lon);;
+        send_coordinates(sockFD,new_lat,new_lon);
+
+        sleep(1);
     }
 
 // close the socket
