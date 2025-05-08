@@ -1,3 +1,5 @@
+This is a real time radar that shows position of devices.
+
 🚀 Project Setup and Execution Guide
 📋 Prerequisites
 
@@ -15,12 +17,9 @@ sudo apt install libcjson-dev
 
 📦 Installation (One-Time Setup)
 
-    Clone the repository:
+    Clone the repository
 
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
-
-Install Node.js dependencies:
+Install Node.js dependencies if is the first time:
 
     npm install
 
@@ -57,6 +56,7 @@ xdg-open index.html    # On Linux
 open index.html        # On macOS
 
 The page will automatically connect to the WebSocket server and display real-time GPS data.
+
 📁 Project Structure
 
 packetSender.c       # C program that generates and sends GPS coordinates via TCP
