@@ -2,15 +2,20 @@
 // Inizialize the connection to the Host
 const socket = new WebSocket('ws://localhost:8080');
 
-// Callable by the html file 
+// Callable by the html file to add a marker to the map
 window.handleNewCoordinates = function(lat, lon) {
     if (!isNaN(lat) && !isNaN(lon)) {
-        const marker = L.marker([lat, lon]).addTo(map);
-        marker.bindPopup(`Lat: ${lat}<br>Lon: ${lon}`).openPopup();
+        const circleMarker = L.circleMarker([lat, lon], {
+            radius: 6, 
+            color: '#001f3f', 
+            fillColor: '#001f3f', 
+            fillOpacity: 1 
+        }).addTo(map);
     } else {
-        console.error('Coordinate non valide:', lat, lon);
+        console.error('Invalid coordinates', lat, lon);
     }
 };
+
 
 
 // Every message sent from the server trigger the function 
@@ -35,7 +40,7 @@ socket.onerror = function(error) {
 };
 
 socket.onopen = function() {
-    console.log('WebSocket conection established.');
+    console.log('WebSocket connection established.');
 };
 
 socket.onclose = function() {

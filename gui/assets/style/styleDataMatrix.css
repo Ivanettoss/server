@@ -1,0 +1,121 @@
+/* Definizione delle variabili di colore */
+:root {
+    --cerulean: #247ba0ff;
+    --verdigris: #70c1b3ff;
+    --celadon: #b2dbbfff;
+    --cream: rgb(175, 222, 171);
+    --folly: rgb(242, 170, 64);
+}
+
+/* Stile di base per il body */
+body {
+    font-weight: 300;
+    line-height: 1.42em;
+    background-color: var(--cream); /* Sfondo chiaro in Cream */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra tutto orizzontalmente */
+    justify-content: flex-start; /* Allinea gli elementi in cima */
+    height: 100vh; /* Usa l'intera altezza della finestra */
+    font-family: 'Arial', sans-serif; /* Font di base più rotondo */
+}
+
+/* Posizionamento del div che contiene input e bottone */
+#inputCsv {
+    text-align: center;  /* Centra il contenuto all'interno del div */
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-trasparente per visibilità */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombra leggera */
+    margin-top: 20px; /* Distanza dalla parte superiore */
+    margin-bottom: 20px; /* Distanza tra il div e la tabella */
+}
+
+/* Bottone di upload */
+#buttonUpload {
+    background-color: var(--cerulean); /* Bottone con Cerulean */
+    border: none;
+    color: rgb(255, 255, 255);
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 15px;
+    font-weight: bold;
+    transition: transform 0.3s ease; /* Aggiungi transizione per hover */
+}
+
+#buttonUpload:hover {
+    transform: scale(1.1); /* Ingrandisce il bottone di 1.1 volte */
+}
+
+/* Stile per il div che contiene la tabella */
+#core {
+    width: 100%;  /* La larghezza del div occupa tutta la pagina */
+    display: flex;
+    justify-content: center; /* Centra la tabella orizzontalmente */
+    padding: 20px;
+    border-radius: 15%;
+}
+
+/* Stile della tabella */
+.container {
+    width: 100%;
+    max-width: 1000px; /* Impostiamo una larghezza massima per la tabella */
+    border-collapse: separate; /* Aggiungi separazione tra i bordi delle celle */
+    border-spacing: 0; /* Rimuove gli spazi tra le celle */
+    margin-top: 20px; /* Aggiunge un po' di spazio sopra la tabella */
+}
+
+/* Stile per le intestazioni della tabella */
+.container th {
+    background-color: var(--folly); /* Colore Folly per l'intestazione */
+    color: white; /* Testo bianco */
+    padding: 16px 12px; /* Padding per le celle dell'intestazione */
+    font-weight: bold; /* Rende il testo in grassetto */
+    text-align: center; /* Centra il testo */
+    font-size: 16px; /* Font leggermente più grande */
+    border-top-left-radius: 8px; /* Angoli arrotondati in alto a sinistra */
+    border-top-right-radius: 8px; /* Angoli arrotondati in alto a destra */
+}
+
+/* Stile per le celle della tabella */
+.container td, .container th {
+    border: 1px solid #ddd; /* Bordo grigio chiaro per tutte le celle */
+    padding: 12px;
+    text-align: center;
+    font-size: 14px; /* Font di dimensioni medie */
+    font-family: 'Arial', sans-serif; /* Font rotondo per le celle */
+    border-radius: 6px; /* Celle con bordi arrotondati */
+}
+
+/* Stile per le righe alternate */
+.container tr:nth-child(odd) {
+    background-color: var(--celadon); /* Colore celadon per le righe dispari */
+}
+
+.container tr:nth-child(even) {
+    background-color: var(--verdigris); /* Colore verdigris per le righe pari */
+}
+
+/* Effetto hover per le righe della tabella */
+.container tr:hover {
+    background-color: var(--cerulean); /* Colore di sfondo quando si passa sopra una riga */
+    cursor: pointer; /* Cambia il cursore su hover */
+}
+
+/* Aggiungi bordi arrotondati alla tabella */
+.container {
+    border-radius: 8px;
+    overflow: hidden; /* Nasconde gli angoli sporgenti */
+}
+
+/* Stile per la tabella intera */
+.container td {
+    transition: background-color 0.3s ease; /* Transizione per l'effetto hover */
+}
+

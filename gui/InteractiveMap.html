@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Map</title>
+    <link rel="stylesheet" href="assets/style/stylesmap.css">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+</head>
+<body>
+        <!-- user buoy creation and info js-->
+        <script src="assets/scripts/userInteraction.js" ></script>
+        <script src="assets/scripts/distanceCalc.js" ></script>
+       
+        
+    <div id="core">
+    <!-- Map Object -->
+    <div id="map"></div>
+    <div id="top-bar">
+
+        <div class="search-container">
+            <input
+              id="searchForm"
+              type="text"
+              placeholder="Search a place..."/>
+        
+        <button id="search-butt" onclick="searchGivenPlace()">
+            <img id="search-img" src="assets/icon/compass.png" alt="Search" />
+        </button>
+        </div>
+    </div>
+
+    <div id="sidebar">
+        <ul id="sidebar-objects" ul>
+            <li>
+               <button class="sidebar-button" onclick="insertBuoyData()"> 
+                <img src="assets/icon/addBuoy.png" alt="Feature 1" class="sidebar-icon" />
+                <p>Add Buoy</p>
+               </button>
+            </li>
+            <li>
+                <button class="sidebar-button" onclick="enableSelection()"> 
+                <img src="assets/icon/distanceB2B.png" alt="Feature 1" class="sidebar-icon" />
+                <p>Distance qualcosa</p>
+                </button>
+            </li>
+            <li>
+                <button class="sidebar-button" onclick="showFilterDropdown()"> 
+                <img src="assets/icon/fishingFilter.png" alt="Feature 1" class="sidebar-icon" />
+                <p>Filter by</p>
+                </button>
+                <div id="filter-dropdown" style="display: none;">
+                    <p onclick="filterBy('stationary')">Stationary</p>
+                    <p onclick="filterBy('dynamic')">Dynamic</p>
+                    <p onclick="filterReset()">Reset</p>
+                </div>
+            </li>
+            <li>
+                <button class="sidebar-button" onclick=> 
+                <img src="assets/icon/settingsRud.png" alt="Feature 1" class="sidebar-icon" />
+                <p>Settings</p>
+                </button>
+            </li>
+        </ul>
+    </div>
+
+        <div id="buoyInfo"  style="display: none;">
+            <button id="close-button" onclick="hideBuoyInfo()">
+                <img src="assets/icon/close-button.png" alt="Close" />
+            </button>
+                <h1>buoy id: <span id="buoyId" ></h1>
+                <img id="buoy-img" src="assets/icon/stationary_buoy.jpg" alt="buoy image" />
+                <div id="latlong-div">
+                    <p>Longitude: <span id="lat" > </p>
+                    <p>Latitude: <span id="long" ></p> 
+                    <p>State: Online</p>  
+                </div>
+        </div>
+    
+        <div id="bottom-bar">
+            <p id='distance-p' style="display:none;"> Distance in km: <span id="distance-live"> </p>
+            <button id="simulation-butt" onclick="startSimulation()">Start simulation</button>
+        </div>
+
+
+        
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <script>
+
+        // Inizialize the  map ([Long,Lat],zoom)
+        var map = L.map('map').setView([42.030761, 11.909473],13);
+        map.zoomControl.remove();
+
+        // Add a tile layer 
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Define 3 objects 
+        var circle1 = L.circle([42.021378, 11.931883 ], {
+            color: 'blue',
+            fillColor: '#blue',
+            radius: 50 ,  // radious of the circle in meters 
+            id:'1',
+            class:'stationary'
+        }).addTo(map);
+
+     
+       window.actualBuoys = 
+        {
+            '1':circle1,
+        }
+
+
+        // Define  pop up event on object
+
+        circle1.on("mouseover", function(e){
+            var latlng = e.latlng;  // get the lat and long of the device 
+            var popup1 = L.popup()
+            .setLatLng(latlng)   // set the Lat and Long of the popup
+            .setContent('Buoy 1')  // Popup text
+            .openOn(map);        
+    });
+
+    circle1.on("mouseout", function() {
+        map.closePopup(); 
+    });
+
+      
+
+    circle1.on("click", function(e) {
+            showBuoyInfo(1, e.latlng);
+        });
+
+        circle2.on("click", function(e) {
+            console.log(e.latlng)
+
+            showBuoyInfo(2, e.latlng);
+        });
+
+        circle3.on("click", function(e) {
+            showBuoyInfo(3, e.latlng);
+        });
+
+
+
+
+    </script>
+    <script src="assets/scripts/wsClientConnection.js"></script>
+    <script src="assets/scripts/buoyInfo.js"></script>
+    <script src="assets/scripts/simulation.js"></script>
+    <script src="assets/scripts/filterBuoy.js" ></script>
+    <script src="assets/scripts/searchPlace.js" ></script>
+
+</body>
+</html>
