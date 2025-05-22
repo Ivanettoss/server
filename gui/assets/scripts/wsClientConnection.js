@@ -10,7 +10,6 @@ window.handleNewCoordinates = function(lat, lon) {
             radius: 6, 
             color: '#001f3f', 
             fillColor: '#001f3f', 
-            radius:50,
             fillOpacity: 1,
             class:'dynamic'
         }).addTo(map);

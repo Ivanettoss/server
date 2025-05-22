@@ -34,7 +34,7 @@
     </div>
 
     <div id="sidebar">
-        <ul id="sidebar-objects" ul>
+        <ul id="sidebar-objects" >
             <li>
                <button class="sidebar-button" onclick="insertBuoyData()"> 
                 <img src="assets/icon/addBuoy.png" alt="Feature 1" class="sidebar-icon" />
@@ -74,8 +74,8 @@
                 <h1>buoy id: <span id="buoyId" ></h1>
                 <img id="buoy-img" src="assets/icon/stationary_buoy.jpg" alt="buoy image" />
                 <div id="latlong-div">
-                    <p>Longitude: <span id="lat" > </p>
-                    <p>Latitude: <span id="long" ></p> 
+                    <p>Latitude: <span id="lat" > </p>
+                    <p>Longitude: <span id="long" ></p> 
                     <p>State: Online</p>  
                 </div>
         </div>
@@ -108,7 +108,7 @@
         var circle1 = L.circle([42.021378, 11.931883 ], {
             color: 'yellow',
             fillColor: 'yellow',
-            radius: 50 ,  // radious of the circle in meters 
+            radius: 6,  
             id:'1',
             class:'stationary'
         }).addTo(map);
@@ -123,10 +123,10 @@
         // Define  pop up event on object
 
         circle1.on("mouseover", function(e){
-            var latlng = e.latlng;  // get the lat and long of the device 
+            var latlng = e.latlng;  
             var popup1 = L.popup()
-            .setLatLng(latlng)   // set the Lat and Long of the popup
-            .setContent('Buoy 1')  // Popup text
+            .setLatLng(latlng)   
+            .setContent('Buoy 1')  
             .openOn(map);        
     });
 
