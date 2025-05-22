@@ -4,13 +4,31 @@ const socket = new WebSocket('ws://localhost:8080');
 
 // Callable by the html file to add a marker to the map
 window.handleNewCoordinates = function(lat, lon) {
+
     if (!isNaN(lat) && !isNaN(lon)) {
-        const circleMarker = L.circleMarker([lat, lon], {
+        const newBuoy = L.circleMarker([lat, lon], {
             radius: 6, 
             color: '#001f3f', 
             fillColor: '#001f3f', 
-            fillOpacity: 1 
+            radius:50,
+            fillOpacity: 1,
+            class:'dynamic'
         }).addTo(map);
+
+
+        newBuoy.on("mouseover", function(e){
+            var latlng = e.latlng;  // get the lat and long of the device 
+            var popup1 = L.popup()
+            .setLatLng(latlng)   // set the Lat and Long of the popup
+            .setContent('Buoy 1')  // Popup text
+            .openOn(map);        
+        });
+
+        newBuoy.on("mouseout", function() {
+            map.closePopup(); 
+        });
+
+      
     } else {
         console.error('Invalid coordinates', lat, lon);
     }

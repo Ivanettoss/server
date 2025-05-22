@@ -104,10 +104,10 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Define 3 objects 
+        // Define a stationary buoy
         var circle1 = L.circle([42.021378, 11.931883 ], {
-            color: 'blue',
-            fillColor: '#blue',
+            color: 'yellow',
+            fillColor: 'yellow',
             radius: 50 ,  // radious of the circle in meters 
             id:'1',
             class:'stationary'
@@ -116,7 +116,7 @@
      
        window.actualBuoys = 
         {
-            '1':circle1,
+            '1':circle1
         }
 
 
@@ -138,16 +138,6 @@
 
     circle1.on("click", function(e) {
             showBuoyInfo(1, e.latlng);
-        });
-
-        circle2.on("click", function(e) {
-            console.log(e.latlng)
-
-            showBuoyInfo(2, e.latlng);
-        });
-
-        circle3.on("click", function(e) {
-            showBuoyInfo(3, e.latlng);
         });
 
 
