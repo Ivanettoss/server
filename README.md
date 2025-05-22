@@ -1,4 +1,5 @@
-This is a real time radar that shows position of devices.
+This is a real time radar that shows position of devices generating markers.
+
 
 🚀 Project Setup and Execution Guide
 📋 Prerequisites
