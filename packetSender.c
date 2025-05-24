@@ -7,6 +7,7 @@
 #include <math.h>
 #include <arpa/inet.h>
 #include "cJSON.h"
+#include <time.h>
 
  
 #define EARTH_RADIUS 6371000.0
@@ -14,12 +15,13 @@
 #define SERVER_ADDR "127.0.0.1"
 #define SERVER_PORT 5000   
 
-void send_coordinates(int sockFD, float LAT, float LON){
+void send_coordinates(int sockFD,int BID, float LAT, float LON){
 
 // create an empty json object
     cJSON *root = cJSON_CreateObject();
 
-// add Lat and Lon matched with them values to root object (Lat : LAT , Lon: LON)
+// add Id, Lat and Lon matched with them values to root object (BuoyID:BID,Lat : LAT , Lon: LON)
+    cJSON_AddNumberToObject(root,"BuoyId",BID);
     cJSON_AddNumberToObject(root,"Lat",LAT);
     cJSON_AddNumberToObject(root,"Lon",LON);
 
@@ -50,8 +52,23 @@ void generate_position(float lat, float lon, float *new_lat, float *new_lon) {
     *new_lon = lon + delta_lon * (180.0 / MPI);
 }
 
+
+
+
+void generate_buoyid(int *new_BuoyId) {
+    static int id_pool[10] = {
+        201, 202, 103, 104, 105, 106, 107, 108,  
+        201, 202                               
+    };
+
+    int index = rand() % 10; 
+    *new_BuoyId = id_pool[index];
+}
+
+
 int main(){
 
+    srand(time(NULL));
     int sockFD;
     struct sockaddr_in server_addr;
 
@@ -85,9 +102,12 @@ int main(){
 
         float new_lat ;
         float new_lon ;
-        generate_position(starting_LAT,starting_LON, &new_lat, &new_lon);
+        int new_BuoyId;
 
-        send_coordinates(sockFD,new_lat,new_lon);
+        generate_position(starting_LAT,starting_LON, &new_lat, &new_lon);
+        generate_buoyid(&new_BuoyId);
+
+        send_coordinates(sockFD,new_BuoyId,new_lat,new_lon);
 
         sleep(1);
     }

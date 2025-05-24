@@ -3,15 +3,15 @@
 const socket = new WebSocket('ws://localhost:8080');
 
 // Callable by the html file to add a marker to the map
-window.handleNewCoordinates = function(lat, lon) {
+window.handleNewCoordinates = function(buoyid,lat, lon) {
 
-    if (!isNaN(lat) && !isNaN(lon)) {
         const newBuoy = L.circleMarker([lat, lon], {
             radius: 6, 
             color: '#001f3f', 
             fillColor: '#001f3f', 
             fillOpacity: 1,
-            class:'dynamic'
+            class:'dynamic',
+            id:buoyid
         }).addTo(map);
 
 
@@ -26,13 +26,14 @@ window.handleNewCoordinates = function(lat, lon) {
         newBuoy.on("mouseout", function() {
             map.closePopup(); 
         });
+   
+    };
 
-      
-    } else {
-        console.error('Invalid coordinates', lat, lon);
-    }
-};
 
+window.handleUpdateCoordinates = function(buoyid,lat, lon){
+
+    
+}
 
 
 // Every message sent from the server trigger the function 
@@ -42,10 +43,19 @@ socket.onmessage = function(event) {
 
         // try to parse the JSON and check if the data is valid
         const data = JSON.parse(event.data);
-        if (data.Lat !== undefined && data.Lon !== undefined) {
 
-            // iff the data is valid, add the marker to the map using the function
-            window.handleNewCoordinates(data.Lat, data.Lon);
+        if (data.BuoyId!== undefined && data.Lat !== undefined && data.Lon !== undefined) {
+
+            if (window.actualBuoys.includes(BuoyId)){
+
+                handleUpdateCoordinates(data.BuoyId, data.Lat, data.Lon);
+
+            }else{
+
+                 // iff the data is valid, add the new buoy marker to the map using the function
+                window.handleNewCoordinates(data.BuoyId, data.Lat, data.Lon);
+
+            }
         }
     } catch (err) {
         console.error('Error detected during message parsing:', event.data);
