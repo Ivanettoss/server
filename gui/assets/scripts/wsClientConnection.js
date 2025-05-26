@@ -34,17 +34,21 @@ window.handleNewCoordinates = function(buoyid,lat, lon) {
 
 window.handleUpdateCoordinates = function(buoyid,lat, lon){
     
-        const oldBuoyData = window.actualBuoys[buoyid];
-        const oldMarker = oldBuoyData.marker;
+            const oldBuoyData = window.actualBuoys[buoyid];
+           
+
+        if (oldBuoyData.marker) {
+            map.removeLayer(oldBuoyData.marker);
+        }
     
-        // Convert the old marker's position to a gray circle marker
-        oldMarker.setStyle({
+        // Disegna il "trattino" tra vecchia e nuova posizione
+        const traceLine = L.polyline([[oldBuoyData.lat,oldBuoyData.lon], [lat, lon]], {
             color: 'gray',
-            fillColor: 'gray',
-            fillOpacity: 0.5,
-            radius: 3,
-            dashArray: '4'
-        });
+            weight: 2,
+            dashArray: '5, 5',
+            opacity: 0.7,
+            className: 'trace-line'
+        }).addTo(map);
     
         // 🔹 Create the marker for the new position
         const newMarker = L.circleMarker([lat, lon], {
