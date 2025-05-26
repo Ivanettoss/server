@@ -26,14 +26,58 @@ window.handleNewCoordinates = function(buoyid,lat, lon) {
         newBuoy.on("mouseout", function() {
             map.closePopup(); 
         });
-   
+
+            // Store the buoy's coordinates
+        window.actualBuoys[buoyid] = { lat: lat, lon: lon,marker:newBuoy, type:'dynamic' };
     };
 
 
 window.handleUpdateCoordinates = function(buoyid,lat, lon){
-
     
-}
+        const oldBuoyData = window.actualBuoys[buoyid];
+        const oldMarker = oldBuoyData.marker;
+    
+        // Convert the old marker's position to a gray circle marker
+        oldMarker.setStyle({
+            color: 'gray',
+            fillColor: 'gray',
+            fillOpacity: 0.5,
+            radius: 3,
+            dashArray: '4'
+        });
+    
+        // 🔹 Create the marker for the new position
+        const newMarker = L.circleMarker([lat, lon], {
+            radius: 6,
+            color: '#FF4136',       // Rosso acceso per indicare l'attuale posizione
+            fillColor: '#FF4136',
+            fillOpacity: 1,
+            class: 'dynamic',
+            id: buoyid
+        }).addTo(map);
+    
+        // Eventi del marker nuovo
+        newMarker.on("mouseover", function(e) {
+            const latlng = e.latlng;
+            const popup = L.popup()
+                .setLatLng(latlng)
+                .setContent(`Buoy ${buoyid}`)
+                .openOn(map);
+        });
+    
+        newMarker.on("mouseout", function() {
+            map.closePopup();
+        });
+    
+        // update the position 
+        window.actualBuoys[buoyid] = {
+            lat: lat,
+            lon: lon,
+            marker: newMarker
+        };
+    };
+    
+ 
 
 
 // Every message sent from the server trigger the function 
@@ -46,7 +90,7 @@ socket.onmessage = function(event) {
 
         if (data.BuoyId!== undefined && data.Lat !== undefined && data.Lon !== undefined) {
 
-            if (window.actualBuoys.includes(BuoyId)){
+            if ( data.BuoyId in window.actualBuoys ){
 
                 handleUpdateCoordinates(data.BuoyId, data.Lat, data.Lon);
 
@@ -58,7 +102,7 @@ socket.onmessage = function(event) {
             }
         }
     } catch (err) {
-        console.error('Error detected during message parsing:', event.data);
+        console.error('Error detected during message parsing:', event.data, err);
     }
 };
 
