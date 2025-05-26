@@ -41,7 +41,7 @@ window.handleUpdateCoordinates = function(buoyid,lat, lon){
             map.removeLayer(oldBuoyData.marker);
         }
     
-        // Disegna il "trattino" tra vecchia e nuova posizione
+        // Draw the pathline between the old and new position
         const traceLine = L.polyline([[oldBuoyData.lat,oldBuoyData.lon], [lat, lon]], {
             color: 'gray',
             weight: 2,
@@ -50,7 +50,7 @@ window.handleUpdateCoordinates = function(buoyid,lat, lon){
             className: 'trace-line'
         }).addTo(map);
     
-        // 🔹 Create the marker for the new position
+        //  Create the marker for the new position
         const newMarker = L.circleMarker([lat, lon], {
             radius: 6,
             color: '#FF4136',       // Rosso acceso per indicare l'attuale posizione
@@ -60,7 +60,7 @@ window.handleUpdateCoordinates = function(buoyid,lat, lon){
             id: buoyid
         }).addTo(map);
     
-        // Eventi del marker nuovo
+        // New marker events
         newMarker.on("mouseover", function(e) {
             const latlng = e.latlng;
             const popup = L.popup()
@@ -71,6 +71,11 @@ window.handleUpdateCoordinates = function(buoyid,lat, lon){
     
         newMarker.on("mouseout", function() {
             map.closePopup();
+        });
+
+        
+        newMarker.on("click", function(e) {
+            showBuoyInfo(buoyid, e.latlng);
         });
     
         // update the position 
