@@ -17,64 +17,60 @@
 
 
 void send_test_packet(float ALT)
-{   
-        long http_code = 0;
-    
-        // Crea oggetto JSON
-        cJSON *root = cJSON_CreateObject();
-        cJSON_AddStringToObject(root, "userid", "user6");
-        cJSON_AddStringToObject(root, "boaid", "0x001");
-        cJSON_AddStringToObject(root, "boakey", "VP_eoe8GL8rIYxtzy2h-cpdMV6xWebuC38NtHo_JalMxBLFxcR4-qPFLCX7Iqg9GYOXkPtNo5FcY83Yxogb3SQ==");
-        cJSON_AddNumberToObject(root, "alt", ALT);
-    
-        char *json_data = cJSON_PrintUnformatted(root);
-    
-        CURL *curl = curl_easy_init();
-        if (curl) {
-            CURLcode res;
-    
-            struct curl_slist *headers = NULL;
-            headers = curl_slist_append(headers, "Content-Type: application/json");
-    
-            // URL del server remoto (Hamachi)
-            const char *url = "http://25.4.162.138:8080/writeData";
-    
-            // Set delle opzioni curl
-            curl_easy_setopt(curl, CURLOPT_URL, url);
-            curl_easy_setopt(curl, CURLOPT_POSTFIELDS, json_data);
-            curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-            curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L); // Abilita log verbose
-    
-            // (Opzionale) Forza l'interfaccia di rete (es: Hamachi)
-            // curl_easy_setopt(curl, CURLOPT_INTERFACE, "ham0");
-    
-            printf("[DEBUG] Invio richiesta a: %s\n", url);
-            printf("[DEBUG] Payload JSON: %s\n", json_data);
-    
-            // Esegui la richiesta
-            res = curl_easy_perform(curl);
-    
-            // Ottieni codice di risposta HTTP
-            curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &http_code);
-    
-            if (res != CURLE_OK) {
-                fprintf(stderr, "[ERRORE] Richiesta fallita: %s (codice %d)\n", curl_easy_strerror(res), res);
-            } else {
-                printf("[INFO] Richiesta HTTP inviata con successo\n");
-            }
-    
-            printf("[INFO] HTTP response code: %ld\n", http_code);
-    
-            // Pulisci
-            curl_easy_cleanup(curl);
-            curl_slist_free_all(headers);
+{
+    long http_code = 0;
+
+    // Crea oggetto JSON
+    cJSON *root = cJSON_CreateObject();
+    cJSON_AddStringToObject(root, "userid", "user6");
+    cJSON_AddStringToObject(root, "boaid", "0x001");
+    cJSON_AddStringToObject(root, "boakey", "VP_eoe8GL8rIYxtzy2h-cpdMV6xWebuC38NtHo_JalMxBLFxcR4-qPFLCX7Iqg9GYOXkPtNo5FcY83Yxogb3SQ==");
+    cJSON_AddNumberToObject(root, "alt", ALT);
+
+    char *json_data = cJSON_PrintUnformatted(root);
+
+    CURL *curl = curl_easy_init();
+    if (curl) {
+        CURLcode res;
+
+        struct curl_slist *headers = NULL;
+        headers = curl_slist_append(headers, "Content-Type: application/json");
+
+        const char *url = "http://25.4.162.138:8080/writeData";
+
+        curl_easy_setopt(curl, CURLOPT_URL, url);
+        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, json_data);
+        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+        curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+
+        // ✅ Forza l'uso dell'interfaccia di rete Hamachi
+        curl_easy_setopt(curl, CURLOPT_INTERFACE, "ham0");
+
+        printf("[DEBUG] Invio richiesta a: %s\n", url);
+        printf("[DEBUG] Payload JSON: %s\n", json_data);
+
+        res = curl_easy_perform(curl);
+
+        curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &http_code);
+
+        if (res != CURLE_OK) {
+            fprintf(stderr, "[ERRORE] Richiesta fallita: %s (codice %d)\n", curl_easy_strerror(res), res);
         } else {
-            fprintf(stderr, "[ERRORE] Impossibile inizializzare CURL\n");
+            printf("[INFO] Richiesta HTTP inviata con successo\n");
         }
-    
-        cJSON_Delete(root);
-        free(json_data);
+
+        printf("[INFO] HTTP response code: %ld\n", http_code);
+
+        curl_easy_cleanup(curl);
+        curl_slist_free_all(headers);
+    } else {
+        fprintf(stderr, "[ERRORE] Impossibile inizializzare CURL\n");
     }
+
+    cJSON_Delete(root);
+    free(json_data);
+}
+
     
 
 
