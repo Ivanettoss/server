@@ -131,55 +131,11 @@ void generate_buoyid(int *new_BuoyId) {
 
 int main(){
 
-    srand(time(NULL));
-    int sockFD;
-    struct sockaddr_in server_addr;
-
-// create a tcp socket, ipv4(af inet) and define the stream type (sock stream), 0=tcp)
-    sockFD=socket(AF_INET,SOCK_STREAM,0);
-
-// creation failure will generate a negative socketFD
-    if (sockFD<0){
-        perror("An error occurred during socket creation");
-        exit(1);
-    }
-
-// reset the server_addr struct
-    memset(&server_addr, 0, sizeof(server_addr));
-
-// define the struct 
-    server_addr.sin_family = AF_INET;   // ipv4 family addresses
-    server_addr.sin_port=htons(SERVER_PORT); // converts serverport to a network format
-    server_addr.sin_addr.s_addr=inet_addr(SERVER_ADDR); // convert IP in server addr in a usable format
-
-//  check the connection 
-    if (connect(sockFD,(struct sockaddr *)&server_addr, sizeof(server_addr)) < 0){
-        perror("Connection failed");
-        exit(1);
-    }
-
-    float starting_LAT = 42.020637;
-    float starting_LON = 11.900794;
-
-    while(1){
-
-        float new_lat ;
-        float new_lon ;
-        float new_alt;
-        int new_BuoyId;
-
-        generate_position(starting_LAT,starting_LON, &new_lat, &new_lon);
-        generate_buoyid(&new_BuoyId);
-
-        new_alt= 1.0f + ((float)rand() / RAND_MAX) * (100.0f - 1.0f);
-
-        send_test_packet(new_alt);
-
-        sleep(5);
-    }
-
-// close the socket
-    close(sockFD);
+   
+        send_test_packet(42.0f);
+        return 0;
+    
+    
 }
 
 
