@@ -105,13 +105,15 @@
         }).addTo(map);
 
         // Define a stationary buoy
-        var circle1 = L.circle([42.021378, 11.931883 ], {
-            color: 'yellow',
-            fillColor: 'yellow',
-            radius: 6,  
-            id:'1',
-            class:'stationary'
-        }).addTo(map);
+            var circle1 = L.circleMarker([42.021378, 11.931883], {
+        radius: 6, // Raggio in pixel (puoi modificarlo)
+        color: 'yellow',
+        fillColor: 'yellow',
+        fillOpacity: 1,
+        id: '1',
+        class: 'stationary'
+    }).addTo(map);
+
 
      
        window.actualBuoys = 
