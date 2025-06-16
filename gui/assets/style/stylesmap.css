@@ -34,7 +34,7 @@ body {
   z-index: 2;
   top: 0;
   left: 0;
-  overflow-y: auto;
+  overflow-y: visible;
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -64,10 +64,9 @@ body {
 }
 
 .sidebar-icon {
-  width: 20px;
+  width: 30px;
   height: auto;
   cursor: pointer;
-  filter: brightness(0.4); /* icone meno intense */
   transition: filter 0.3s ease;
 }
 
@@ -85,7 +84,7 @@ body {
 #buoyInfo {
   width: 220px;
   height: 300px;
-  background-color: var(--non-photo-blue);
+  background-color: var(--honeydew);
   border-radius: 20px;
   font-family: inherit;
   z-index: 3;
@@ -132,8 +131,11 @@ body {
 #latlong-div {
   text-align: left;
   margin-left: 5px;
+  padding: 3px;
 }
-
+  #latlong-div p {
+        margin-bottom: 10px; /* Puoi aumentare questo valore */
+    }
 #close-button {
   position: absolute;
   top: 10px;
@@ -259,9 +261,9 @@ body {
 
 #filter-dropdown {
   z-index: 3;
-  padding: 10px;
+  padding: 5px;
   position: absolute;
-  left: 20px;
+  left: 50px;
   cursor: pointer;
   background-color: var(--background);
   border-radius: 10px;
@@ -316,7 +318,7 @@ body {
 }
 
 #search-butt:hover {
-  transform: scale(1.5);
+  transform: scale(1.1);
 }
 
 #search-butt img {
@@ -326,5 +328,5 @@ body {
 }
 
 #search-butt img:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
