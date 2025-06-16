@@ -16,16 +16,14 @@
 #define SERVER_PORT 5000 
 
 
-void send_test_packet(float ALT)
+void send_test_packet()
 {
     long http_code = 0;
 
     // Crea oggetto JSON
     cJSON *root = cJSON_CreateObject();
-    cJSON_AddStringToObject(root, "userid", "user6");
-    cJSON_AddStringToObject(root, "boaid", "0x001");
-    cJSON_AddStringToObject(root, "boakey", "VP_eoe8GL8rIYxtzy2h-cpdMV6xWebuC38NtHo_JalMxBLFxcR4-qPFLCX7Iqg9GYOXkPtNo5FcY83Yxogb3SQ==");
-    cJSON_AddNumberToObject(root, "alt", ALT);
+    cJSON_AddStringToObject(root, "userid", "123456789");
+    cJSON_AddStringToObject(root, "key", "hGzoq-4Gg1RrWmzU0nDrikGO2sAqPxvODc5czDjmYQkU7rm5_Xpo3PxGJnlHtTheUCNy4bZ9-dW4BeTBKZlDiA==");
 
     char *json_data = cJSON_PrintUnformatted(root);
 
@@ -36,7 +34,7 @@ void send_test_packet(float ALT)
         struct curl_slist *headers = NULL;
         headers = curl_slist_append(headers, "Content-Type: application/json");
 
-        const char *url = "http://25.4.162.138:8080/writeData";
+        const char *url = "http://25.4.162.138:8080/readData";
 
         curl_easy_setopt(curl, CURLOPT_URL, url);
         curl_easy_setopt(curl, CURLOPT_POSTFIELDS, json_data);
@@ -132,7 +130,7 @@ void generate_buoyid(int *new_BuoyId) {
 int main(){
 
    
-        send_test_packet(42.0f);
+        send_test_packet();
         return 0;
     
     
