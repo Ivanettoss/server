@@ -20,16 +20,16 @@ function enableSelection() {
 function drawDistanceLine(c1,c2,d,cId)
 {   
     console.log("im drawing bae")
-    let latlngs= [c1,c2]
+    let latlngs= [[c1[0],c1[1]],[c2[0],c2[1]]]
     var distline = L.polyline(latlngs, {
-        color: 'red', // puoi scegliere il colore della linea
+        color: 'grey', // puoi scegliere il colore della linea
         weight: 3,     // spessore della linea
         dashArray: '5, 5'
     }).addTo(map);
 
 
-    var midLat = (c1.lat + c2.lat) / 2;
-    var midLng = (c1.lng + c2.lng) / 2;
+    var midLat = (c1[0] + c2[0]) / 2;
+    var midLng = (c1[1] + c2[1]) / 2;
     var midPoint = L.latLng(midLat, midLng);
     console.log("mo te do er mid")
     console.log(midPoint)
@@ -91,7 +91,8 @@ function getCoordById(idBuoy)
     console.log("im here")
     wantedBuoy= window.actualBuoys[idBuoy]
     if (wantedBuoy){
-        return wantedBuoy.getLatLng();
+        console.log(wantedBuoy)
+        return [wantedBuoy.lat,wantedBuoy.lon];
     }else 
     console.log("buoy not found")
 }
@@ -99,10 +100,10 @@ function getCoordById(idBuoy)
 
 function distanceCalculation(c1,c2){
 console.log("estamos calcolando")
- lat1 = +c1.lat
- long1 = +c1.lng
- lat2 = +c2.lat
- long2 = +c2.lng
+ lat1 = +c1[0]
+ long1 = +c1[1]
+ lat2 = +c2[0]
+ long2 = +c2[1]
 console.log(lat1)
 console.log(long1)
  distance= vincenty(lat1,long1,lat2,long2)

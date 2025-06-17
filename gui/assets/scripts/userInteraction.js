@@ -21,6 +21,8 @@ function insertBuoyData(){
     alert("Buoy inserted successfully")
 
 
+
+
 }
 
 function checkCoordinates(lat,long){
@@ -41,20 +43,22 @@ function checkCoordinates(lat,long){
 
 
 
-function createNewBuoyOnMap(id,lat,long)
+function createNewBuoyOnMap(nid,lat,long)
 {   
-    newcolor=getRandomColor()
-    var newBuoy = L.circle([lat, long ], {
-        color: newcolor,
-        fillColor: newcolor,
-        radius: 50    // radious of the circle in meters 
+    var newBuoy = L.circleMarker([lat, long ], {
+        id:nid,
+        color: 'yellow',
+        fillColor: 'yellow',
+        fillOpacity:1,
+        radius:6,
+        class:'stationary'
     }).addTo(map);
 
     newBuoy.on("mouseover", function(e){
         var latlng = e.latlng;  // get the lat and long of the device 
-        var popup1 = L.popup()
-        .setLatLng(latlng)   // set the Lat and Long of the popup
-        .setContent(id+':' + latlng)  // Popup text
+        L.popup()
+        .setLatLng(latlng)   
+        .setContent("buoy id:"+nid) 
         .openOn(map);        
 });
 
@@ -62,14 +66,14 @@ function createNewBuoyOnMap(id,lat,long)
     map.closePopup(); 
 });
 
+  newBuoy.on("click", function(e) {
+            showBuoyInfo(nid, e.latlng);
+        });
+
+window.actualBuoys[nid]={
+        lat:lat,
+        long:long,
+        marker: newBuoy,
+        type:"stationary"
+     }
 }
-
-
-function getRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }

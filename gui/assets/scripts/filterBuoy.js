@@ -16,17 +16,19 @@ function showFilterDropdown(){
 
 hiddenBuoys=[]
 
-function filterBy(type){
+function filterBy(wantedType){
 
     for(id in actualBuoys){
         console.log(id)
         var buoy = actualBuoys[id]
         console.log("boa dentro filterby ")
         console.log(buoy)
-
-        if (buoy.options.class != type)
+        console.log(buoy.type)
+        console.log(wantedType)
+        if (buoy.type != wantedType)
         {
-            map.removeLayer(buoy)
+
+            map.removeLayer(buoy.marker)
             hiddenBuoys.push(id)
         }
 
@@ -44,7 +46,7 @@ function filterReset() {
             
             var buoy = actualBuoys[index];
             console.log(buoy); 
-            map.addLayer(buoy); // Aggiungi il layer alla mappa
+            map.addLayer(buoy.marker); // Aggiungi il layer alla mappa
             
         });
         hiddenBuoys = []; // Resetta hiddenBuoys dopo aver aggiunto gli oggetti alla mappa
