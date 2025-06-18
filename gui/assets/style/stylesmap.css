@@ -223,14 +223,6 @@ body {
   opacity: 0.7;
 }
 
-#bottom-bar {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
-  padding: 10px;
-}
 
 #simulation-butt {
   background-color: var(--accent);
@@ -328,4 +320,49 @@ body {
 
 #search-butt img:hover {
   transform: scale(1.1);
+}
+
+
+
+#bottom-bar {
+  position: fixed;
+  bottom: 20px;
+  left: 15%;
+  transform: translateX(-50%);
+  z-index: 3;
+  padding: 10px;
+}
+
+
+#legend {
+  background-color: rgba(245, 249, 247, 0.9);
+  border-radius: 20px;
+  padding: 7px;
+  z-index: 3;
+  display:flex;
+  gap: 20px; 
+  align-items: center;
+}
+
+#legend div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.marker {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.yellow {
+  background-color: #ffd700;
+  border: 1px solid #bfa600;
+}
+
+.blue {
+  background-color: #3399ff;
+  border: 1px solid #0055aa;
 }

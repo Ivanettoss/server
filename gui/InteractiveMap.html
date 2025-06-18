@@ -80,10 +80,13 @@
                 </div>
         </div>
     
-        <div id="bottom-bar">
-            <p id='distance-p' style="display:none;"> Distance in km: <span id="distance-live"> </p>
-            <button id="simulation-butt" onclick="startSimulation()">Start simulation</button>
+     <div id="bottom-bar">
+        <div id="legend" class="legend">
+            <div><span class="marker yellow"></span> Stationary</div>
+            <div><span class="marker blue"></span> Dynamic</div>
+   
         </div>
+    </div>
 
 
         
@@ -107,9 +110,9 @@
         // Define a stationary buoy
         var circle1 = L.circleMarker([42.021378, 11.931883], {
         radius: 6, 
-        color: 'yellow',
-        fillColor: 'yellow',
-        fillOpacity: 1,
+        color: '#bfa600',
+        fillColor:'#fcd12a',
+        fillOpacity: 0.8,
         id: '1',
         class: 'stationary'
     }).addTo(map);
@@ -134,9 +137,9 @@
 
        var circle2 = L.circleMarker([42.023456, 11.87965], {
         radius: 6, 
-        color: 'yellow',
-        fillColor: 'yellow',
-        fillOpacity: 1,
+        color: '#bfa600',
+        fillColor: '#fcd12a',
+        fillOpacity: 0.8,
         id: '10',
         class: 'stationary'
     }).addTo(map);
@@ -158,6 +161,16 @@
             showBuoyInfo(circle2.options.id, e.latlng);
         });
 
+
+        var circle3 = L.circleMarker([42.033456, 11.89565], {
+        radius: 6, 
+        color: '#0055aa',
+        fillOpacity: 0.8,
+        id: '35',
+        class: 'dynamic'
+    }).addTo(map);
+
+    
  window.actualBuoys = 
         {
             '1': { lat:42.021378 , lon: 11.931883, marker: circle1, type: 'stationary' },

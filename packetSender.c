@@ -99,7 +99,6 @@ int main(){
     float starting_LON = 11.900794;
 
     while(1){
-
         float new_lat ;
         float new_lon ;
         int new_BuoyId;
@@ -111,8 +110,5 @@ int main(){
 
         sleep(1);
     }
-
-// close the socket
     close(sockFD);
 }
-

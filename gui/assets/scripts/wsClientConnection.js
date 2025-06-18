@@ -7,9 +7,9 @@ window.handleNewCoordinates = function(buoyid,lat, lon) {
 
         const newBuoy = L.circleMarker([lat, lon], {
             radius: 6, 
-            color: '#001f3f', 
-            fillColor: '#001f3f', 
-            fillOpacity: 1,
+            color: '#0055aa', 
+            fillColor: '#0055aa', 
+            fillOpacity: 0.8,
             class:'dynamic',
             id:buoyid
         }).addTo(map);
@@ -53,9 +53,9 @@ window.handleUpdateCoordinates = function(buoyid,lat, lon){
         //  Create the marker for the new position
         const newMarker = L.circleMarker([lat, lon], {
             radius: 6,
-            color: '#FF4136',       // Rosso acceso per indicare l'attuale posizione
-            fillColor: '#FF4136',
-            fillOpacity: 1,
+            color: '#0055aa',       
+            fillColor: '#0055aa',
+            fillOpacity: 0.8,
             class: 'dynamic',
             id: buoyid
         }).addTo(map);
