@@ -93,18 +93,22 @@ int main() {
     // create an array of pthread_t to match threads and buoys
     pthread_t threads[NUM_BOE];
 
-
+    // array of BuoyArgs  struct to pass parameters to each thread
     BuoyArgs args[NUM_BOE];
 
     int buoy_ids[NUM_BOE] = {201, 202, 203, 204, 205};
     float base_lat = 42.020637;
     float base_lon = 11.900794;
 
+
+    // fill each args struct for each buoy
     for (int i = 0; i < NUM_BOE; i++) {
         args[i].buoy_index = i;
         args[i].buoy_id = buoy_ids[i];
         args[i].start_lat = base_lat + i * 0.002;
         args[i].start_lon = base_lon + i * 0.002;
+
+        // create a thread when the args struct is ready, lunch the simulation function
         if (pthread_create(&threads[i], NULL, simulate_buoy, &args[i]) != 0) {
             perror("Errore nella creazione del thread");
         }
